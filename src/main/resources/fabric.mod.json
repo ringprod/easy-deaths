@@ -1,0 +1,33 @@
+{
+	"schemaVersion": 1,
+	"id": "easy-deaths",
+	"version": "${version}",
+	"name": "Easy Deaths",
+	"description": "Make dying a little easier! Control item spread, despawn time, and invincibility.",
+	"authors": [
+		"ringpro"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/easy-deaths/"
+	},
+	"license": "MIT",
+	"icon": "assets/easy-deaths/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+          "com.ringpro.EasyDeathsMod"
+		]
+	},
+	"mixins": [
+		"easy-deaths.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "1.20.x",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
