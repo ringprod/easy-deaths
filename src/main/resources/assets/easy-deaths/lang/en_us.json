@@ -1,5 +1,6 @@
 {
   "gamerule.deathItemsSpreadAmount": "Items dropped on death spread amount",
   "gamerule.deathItemsNeverDespawn": "Items dropped on death should never despawn",
-  "gamerule.deathItemsInvulnerable": "Items dropped on death should be invulnerable"
+  "gamerule.deathItemsInvulnerable": "Items dropped on death should be invulnerable",
+  "gamerule.deathItemsGlow": "Items dropped on death should be glowing"
 }

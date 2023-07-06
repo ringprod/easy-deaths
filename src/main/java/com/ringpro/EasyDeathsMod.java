@@ -26,4 +26,8 @@ public class EasyDeathsMod implements ModInitializer {
 	public static final GameRules.Key<GameRules.BooleanRule> DEATH_ITEMS_INVULNERABLE =
 			GameRuleRegistry.register("deathItemsInvulnerable", GameRules.Category.DROPS,
 					GameRuleFactory.createBooleanRule(true));
+
+	public static final GameRules.Key<GameRules.BooleanRule> DEATH_ITEMS_GLOW =
+			GameRuleRegistry.register("deathItemsGlow", GameRules.Category.DROPS,
+					GameRuleFactory.createBooleanRule(true));
 }
