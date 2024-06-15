@@ -6,8 +6,10 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.EntityPositionS2CPacket;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.core.jmx.Server;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,6 +21,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ItemEntityMixin implements ItemEntityInterface {
     @Unique private boolean isAcutallyInvulnerable;
     @Unique private  boolean shouldGlow;
+    @Unique private final ItemEntity itemEntity = (ItemEntity) (Object) this;
+
 
     @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
     public void inv(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
@@ -28,13 +32,12 @@ public class ItemEntityMixin implements ItemEntityInterface {
     }
     @Inject(at=@At("HEAD"), method="tick()V")
     private void tick(CallbackInfo ci) {
-        ItemEntity itemEntity = ((ItemEntity)(Object)this);
         World world = itemEntity.getWorld();
         if (itemEntity.getY() < -64) {
             if (getAcutallyInvulnerable()) {
-                itemEntity.teleport(itemEntity.getX(), -60, itemEntity.getZ());
-                itemEntity.setVelocity(0, 0, 0);
                 if (!world.isClient) {
+                    itemEntity.teleport((ServerWorld) itemEntity.getWorld(),itemEntity.getX(), -60, itemEntity.getZ(), PositionFlag.VALUES,0,0);
+                    itemEntity.setVelocity(0, 0, 0);
                     ((ServerWorld)world).getChunkManager().sendToNearbyPlayers(itemEntity, new EntityPositionS2CPacket(itemEntity));
                     ((ServerWorld)world).getChunkManager().sendToNearbyPlayers(itemEntity, new EntityVelocityUpdateS2CPacket(itemEntity));
                 }
